@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Katerine Alejandra Ruiz Navarrete">
+  <link rel="stylesheet" href="visual.css">
+  <title>Generador de Comprobantes</title>
+  
+</head>
+
+  <body>
+  
+    <div id="container">
+      <h2>Generador de Comprobantes</h2>
+  
+      <form id="comprobanteForm">
+        <label for="cedula">Cédula:</label>
+        <input type="text" id="cedula" required>
+    
+         <br>    
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required>
+        <br>
+        <label for="correo">Correo Electrónico:</label>
+        <input type="email" id="correo" required>
+        <br>
+        <label for="fecha">Fecha de Comprobante:</label>
+        <input type="date" id="fecha" required>
+        <br>
+        <label for="producto">Producto:</label>
+        <select id="producto" required>
+          <option value="tarjeta_credito">Tarjeta de Crédito</option>
+          <option value="prestamo_personal">Préstamo Personal</option>
+          <option value="tarjeta_amparada">Tarjeta Amparada</option>
+          <option value="deuda_total">Deuda Total</option>
+        </select>
+        <br>
+  
+        <button type="button" onclick="agregarComprobante()">Agregar Comprobante</button>
+      </form>
+  
+      <table id="comprobantesTable">
+    
+      </table>
+    </div>
+  
+    <script>
+      function agregarComprobante() {
+        var cedula = document.getElementById("cedula").value;
+        var nombre = document.getElementById("nombre").value;
+        var correo = document.getElementById("correo").value;
+        var fecha = document.getElementById("fecha").value;
+        var producto = document.getElementById("producto").value;
+  
+        // Verificar si ya existe en la tabla
+        if (existeEnTabla(cedula)) {
+        alert("Este comprobante ya ha sido generado. El comprobante tardará 8 días hábiles en llegar al correo electrónico.");
+        return;
+    }
+        if (producto === "deuda_total") {
+        alert("si usted se encutra en fechas de facturacion tendra que genar el pago de su factura y tambien el comprovante adicinal para competar de total de su deuda.");
+        return;
+    }
+  
+        var table = document.getElementById("comprobantesTable");
+        var row = table.insertRow(-1);
+  
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+  
+        cell1.innerHTML = cedula;
+        cell2.innerHTML = nombre;
+        cell3.innerHTML = correo;
+        cell4.innerHTML = fecha;
+        cell5.innerHTML = producto;
+  
+        // Limpiar el formulario después de agregar el comprobante
+        document.getElementById("comprobanteForm").reset();
+      }
+
+      function existeEnTabla(cedula) {
+    var table = document.getElementById("comprobantesTable");
+    for (var i = 1; i < table.rows.length; i++) {
+        var cedulaTabla = table.rows[i].cells[0].innerHTML;
+
+        if (cedula === cedulaTabla) {
+            return true;
+        }
+    }
+    return false;
+}
+    </script>
+  
+  </body>
+  </html>
+  
